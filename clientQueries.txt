@@ -50,3 +50,13 @@ query getQoutesByUser($byId:ID!){
   }
 }
 }
+
+-----------------------------
+mutation createUser($newUser:userInput!){
+ createDummyUser(newUser:$newUser){
+  	 id
+    firstName
+    lastName
+    email
+  }
+}

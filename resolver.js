@@ -1,26 +1,27 @@
-import { quotes, users } from "./fakeData.js";
-import { randomBytes } from "crypto";
-
+import {quotes,users} from './fakeData.js'
+import {randomBytes} from 'crypto'
 const resolvers = {
-  Query: {
-    users: () => users,
-    user: (_, { id }) => users.find((user) => user.id === id),
-    quotesId: (_, { by }) => quotes.filter((quoteId) => quoteId.by === by),
-    quotes: () => quotes,
-  },
-  User: {
-    quotes: (user) => quotes.filter((quote) => quote.by === user.id),
-  },
-  Mutation: {
-    createDummyUser: (_, { newUser }) => {
-      const randomId = randomBytes(5).toString("hex");
-     
-      users.push({
-        randomId,
-        ...newUser
-      });
-      return users.find((user) => user.id === randomId);
+    Query:{
+       users:()=>users,
+       user:(_,{id})=>users.find(user=>user.id == id),
+       quotes:()=>quotes,
+       iquote:(_,{by})=>quotes.filter(quote=>quote.by == by)
     },
-  },
-};
-export default resolvers;
+    User:{
+        quotes:(ur)=>quotes.filter(quote=>quote.by == ur.id)
+    },
+    Mutation:{
+      createDummyUser:(_,{newUser})=>{
+             const id = randomBytes(5).toString("hex")
+             const newUserData =  {
+              id,
+              ...newUser
+          }
+             users.push(newUserData)
+            // return users.find(user=>user.id == id)
+            return newUserData
+        }
+    }
+}
+
+export default resolvers
